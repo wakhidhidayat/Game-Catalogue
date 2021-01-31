@@ -34,6 +34,8 @@ class GameTableViewCell: UITableViewCell {
     
     func configure(with model: Game) {
         print(model.genres)
+        self.poster.layer.cornerRadius = 8
+        self.poster.clipsToBounds = true
         
         self.name.text = model.name
         self.rating.text = String(model.rating)
