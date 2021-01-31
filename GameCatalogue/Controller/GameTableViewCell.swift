@@ -10,6 +10,11 @@ import UIKit
 
 class GameTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var genres: UILabel!
+    @IBOutlet weak var rating: UILabel!
+    @IBOutlet weak var poster: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +26,21 @@ class GameTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    static let identifier = "GameCell"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "GameTableViewCell", bundle: nil)
+    }
+    
+    func configure(with model: Game) {
+        print(model.genres)
+        
+        self.name.text = model.name
+        self.rating.text = String(model.rating)
+        self.genres.text = model.genres[0].name
+        
+        if let data = try? Data(contentsOf: URL(string: model.backgroundImage!)!) {
+            self.poster.image = UIImage(data: data)
+        }
+    }
 }
