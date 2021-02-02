@@ -18,7 +18,7 @@ class GameViewController: UIViewController {
     override func loadView() {
         super.loadView()
         
-        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator = UIActivityIndicatorView(style: .medium)
         table.backgroundView = activityIndicator
     }
 
