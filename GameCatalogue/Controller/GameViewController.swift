@@ -30,16 +30,20 @@ class GameViewController: UIViewController {
         
         table.register(GameTableViewCell.nib(), forCellReuseIdentifier: GameTableViewCell.identifier)
         table.dataSource = self
+        table.delegate = self
     }
     
     func fetchGames() {
         activityIndicator.startAnimating()
         table.separatorStyle = .none
         
-        let components = URLComponents(string: "https://api.rawg.io/api/games")!
-        
-        let request = URLRequest(url: components.url!)
-        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.rawg.io"
+        components.path = "/api/games"
+
+        let request = URLRequest(url: components.url!.absoluteURL)
+
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
                 return
@@ -82,5 +86,13 @@ extension GameViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: GameTableViewCell.identifier, for: indexPath) as! GameTableViewCell
         cell.configure(with: games[indexPath.row])
         return cell
+    }
+}
+
+extension GameViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detail = DetailViewController(nibName: "DetailViewController", bundle: nil)
+        detail.id = games[indexPath.row].id
+        self.navigationController?.pushViewController(detail, animated: true)
     }
 }
