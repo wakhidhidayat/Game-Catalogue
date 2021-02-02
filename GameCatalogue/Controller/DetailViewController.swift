@@ -63,9 +63,14 @@ class DetailViewController: UIViewController {
             
             let posterUrl = finalResult.backgroundImage
             let backgroundUrl = finalResult.backgroundImageAdditional
+            var genres = [String]()
+            
+            for genre in finalResult.genres {
+                genres.append(genre.name)
+            }
                         
             DispatchQueue.main.async {
-                self.configure(name: finalResult.name, poster: posterUrl!, background: backgroundUrl!, released: finalResult.released, genres: finalResult.genres[0].name, rating: finalResult.rating, overview: finalResult.description)
+                self.configure(name: finalResult.name, poster: posterUrl!, background: backgroundUrl!, released: finalResult.released, genres: genres.joined(separator: ", "), rating: finalResult.rating, overview: finalResult.description)
                 self.activityIndicator.stopAnimating()
             }
         }).resume()
@@ -75,7 +80,7 @@ class DetailViewController: UIViewController {
         
         self.genres.text = genres
         self.name.text = name
-        self.rating.text = String(rating)
+        self.rating.text = "\(rating) / 5"
         self.overview.text = overview
         
         if let posterData =  try? Data(contentsOf: URL(string: poster)!) {

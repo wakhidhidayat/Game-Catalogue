@@ -38,8 +38,15 @@ class GameTableViewCell: UITableViewCell {
         self.poster.clipsToBounds = true
         
         self.name.text = model.name
-        self.rating.text = String(model.rating)
-        self.genres.text = model.genres[0].name
+        self.rating.text = "\(model.rating) / 5"
+        
+        var genres = [String]()
+        
+        for genre in model.genres {
+            genres.append(genre.name)
+        }
+        
+        self.genres.text = genres.joined(separator: ", ")
         
         if let data = try? Data(contentsOf: URL(string: model.backgroundImage!)!) {
             self.poster.image = UIImage(data: data)
