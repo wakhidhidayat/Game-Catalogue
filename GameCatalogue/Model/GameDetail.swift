@@ -16,16 +16,7 @@ struct GameDetail: Codable {
     let backgroundImageAdditional: String?
     let rating: Double
     let description: String
-    let platforms: [Platform]
     let genres: [Genre]
-    
-    struct Platform: Codable {
-        let platform: PlatformName
-        
-        struct PlatformName: Codable {
-            let name: String
-        }
-    }
     
     struct Genre: Codable {
         let name: String
@@ -39,7 +30,6 @@ struct GameDetail: Codable {
         case backgroundImageAdditional = "background_image_additional"
         case rating
         case description
-        case platforms
         case genres
     }
 }
