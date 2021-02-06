@@ -66,10 +66,10 @@
             </objects>
             <point key="canvasLocation" x="100.00000000000001" y="93.75"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="r8F-IV-TJV">
             <objects>
-                <viewController id="YvV-YL-FB3" sceneMemberID="viewController">
+                <viewController id="YvV-YL-FB3" customClass="ProfileViewController" customModule="GameCatalogue" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n48-Dv-jC8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,6 +165,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GAv-qL-MjP"/>
+                    <connections>
+                        <outlet property="imageProfile" destination="TYU-AQ-B4J" id="cfW-TN-fDN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKN-vg-5Yd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
