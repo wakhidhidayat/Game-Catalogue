@@ -11,7 +11,7 @@ import UIKit
 class GameTableViewCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var genres: UILabel!
+    @IBOutlet weak var released: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var poster: UIImageView!
     
@@ -33,20 +33,11 @@ class GameTableViewCell: UITableViewCell {
     }
     
     func configure(with model: Game) {
-        print(model.genres)
         self.poster.layer.cornerRadius = 8
         self.poster.clipsToBounds = true
-        
         self.name.text = model.name
         self.rating.text = "\(model.rating) / 5"
-        
-        var genres = [String]()
-        
-        for genre in model.genres {
-            genres.append(genre.name)
-        }
-        
-        self.genres.text = genres.joined(separator: ", ")
+        self.released.text = model.released
         
         if let data = try? Data(contentsOf: URL(string: model.backgroundImage!)!) {
             self.poster.image = UIImage(data: data)

@@ -41,7 +41,10 @@ class DetailViewController: UIViewController {
         let request = URLRequest(url: components.url!.absoluteURL)
         
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
+            guard let httpResponse =
+                    response as? HTTPURLResponse,
+                    httpResponse.statusCode >= 200 && httpResponse.statusCode < 300
+            else {
                 return
             }
             
@@ -70,14 +73,29 @@ class DetailViewController: UIViewController {
             }
                         
             DispatchQueue.main.async {
-                self.configure(name: finalResult.name, poster: posterUrl!, background: backgroundUrl!, released: finalResult.released, genres: genres.joined(separator: ", "), rating: finalResult.rating, overview: finalResult.description)
+                self.configure(
+                    name: finalResult.name,
+                    poster: posterUrl!,
+                    background: backgroundUrl ?? "",
+                    released: finalResult.released,
+                    genres: genres.joined(separator: ", "),
+                    rating: finalResult.rating,
+                    overview: finalResult.description
+                )
                 self.activityIndicator.stopAnimating()
             }
         }).resume()
     }
     
-    func configure(name: String, poster: String, background: String, released: String?, genres: String, rating: Double, overview: String) {
-        
+    func configure(
+        name: String,
+        poster: String,
+        background: String,
+        released: String?,
+        genres: String,
+        rating: Double,
+        overview: String
+    ) {
         self.genres.text = genres
         self.name.text = name
         self.rating.text = "\(rating) / 5"
@@ -97,5 +115,5 @@ class DetailViewController: UIViewController {
             self.released.text = "-"
         }
     }
-
+    
 }

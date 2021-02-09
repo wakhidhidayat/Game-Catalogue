@@ -33,7 +33,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adventure, Action" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yp-v5-ch5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2013-04-17" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yp-v5-ch5">
                                 <rect key="frame" x="0.0" y="31" width="377" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -82,10 +82,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="genres" destination="7yp-v5-ch5" id="n23-hH-t79"/>
                 <outlet property="name" destination="bL7-Bu-ILW" id="aTJ-Qz-9gJ"/>
                 <outlet property="poster" destination="HIY-Tl-aWr" id="ZvM-5F-6Ob"/>
                 <outlet property="rating" destination="EJu-Mc-2n2" id="Uk5-pY-Ld3"/>
+                <outlet property="released" destination="7yp-v5-ch5" id="6sP-7k-tUQ"/>
             </connections>
             <point key="canvasLocation" x="-1367.3913043478262" y="163.72767857142856"/>
         </tableViewCell>

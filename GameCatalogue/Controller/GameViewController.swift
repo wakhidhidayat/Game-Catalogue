@@ -45,7 +45,10 @@ class GameViewController: UIViewController {
         let request = URLRequest(url: components.url!.absoluteURL)
 
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
+            guard let httpResponse =
+                    response as? HTTPURLResponse,
+                    httpResponse.statusCode >= 200 && httpResponse.statusCode < 300
+            else {
                 return
             }
             
@@ -83,9 +86,15 @@ extension GameViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: GameTableViewCell.identifier, for: indexPath) as! GameTableViewCell
-        cell.configure(with: games[indexPath.row])
-        return cell
+        if let cell = tableView.dequeueReusableCell(
+            withIdentifier: GameTableViewCell.identifier,
+            for: indexPath
+        ) as? GameTableViewCell {
+            cell.configure(with: games[indexPath.row])
+            return cell
+        } else {
+            return UITableViewCell()
+        }
     }
 }
 
