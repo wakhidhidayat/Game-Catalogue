@@ -99,7 +99,7 @@ class DetailViewController: UIViewController {
         self.genres.text = genres
         self.name.text = name
         self.rating.text = "\(rating) / 5"
-        self.overview.text = overview
+        self.overview.text = Util.removeHTMLTags(in: overview)
         
         if let posterData =  try? Data(contentsOf: URL(string: poster)!) {
             self.poster.image = UIImage(data: posterData)
@@ -110,7 +110,7 @@ class DetailViewController: UIViewController {
         }
         
         if let releasedData = released {
-            self.released.text = releasedData
+            self.released.text = Util.formatDate(from: releasedData)
         } else {
             self.released.text = "-"
         }
