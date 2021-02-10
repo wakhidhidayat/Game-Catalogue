@@ -52,7 +52,7 @@
         <scene sceneID="TUk-Ff-MHR">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HXc-Pf-JoB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Games" image="gamecontroller" catalog="system" id="k6y-B6-5Co"/>
+                    <tabBarItem key="tabBarItem" title="Games" image="gamecontroller.fill" catalog="system" id="k6y-B6-5Co"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="oOw-fz-Boe">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -228,7 +228,7 @@
         <scene sceneID="g8a-Ps-Q8k">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pq2-Ma-Jpc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="heart" catalog="system" id="jw8-95-MUs"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="suit.heart.fill" catalog="system" id="jw8-95-MUs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="gEF-oY-dQV">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -246,9 +246,9 @@
     </scenes>
     <resources>
         <image name="avatar" width="1579" height="1633"/>
-        <image name="gamecontroller" catalog="system" width="128" height="80"/>
-        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="gamecontroller.fill" catalog="system" width="128" height="80"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
+        <image name="suit.heart.fill" catalog="system" width="128" height="109"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

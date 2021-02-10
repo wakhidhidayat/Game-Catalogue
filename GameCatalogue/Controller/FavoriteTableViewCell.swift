@@ -9,11 +9,11 @@
 import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
-
-    @IBOutlet var poster: UIImageView!
-    @IBOutlet var name: UILabel!
-    @IBOutlet var released: UILabel!
-    @IBOutlet var rating: UILabel!
+    
+    @IBOutlet weak var poster: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var released: UILabel!
+    @IBOutlet weak var rating: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,12 +32,12 @@ class FavoriteTableViewCell: UITableViewCell {
         return UINib(nibName: "FavoriteTableViewCell", bundle: nil)
     }
     
-    func configure(with model: Game) {
+    func configure(with model: FavoriteModel) {
         self.poster.layer.cornerRadius = 8
         self.poster.clipsToBounds = true
         self.name.text = model.name
-        self.rating.text = "\(model.rating) / 5"
-        self.released.text = Util.formatDate(from: model.released)
+        self.rating.text = "\(model.rating!) / 5"
+        self.released.text = Util.formatDate(from: model.released!)
         
         if let data = try? Data(contentsOf: URL(string: model.backgroundImage!)!) {
             self.poster.image = UIImage(data: data)

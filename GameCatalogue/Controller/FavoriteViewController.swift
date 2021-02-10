@@ -11,7 +11,9 @@ import UIKit
 class FavoriteViewController: UIViewController {
 
     @IBOutlet var table: UITableView!
-    var favorites = [Game]()
+    
+    var favorites = [FavoriteModel]()
+    private lazy var favoriteProvider: FavoriteProvider = { return FavoriteProvider() }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +26,16 @@ class FavoriteViewController: UIViewController {
     }
     
     private func loadFavorites() {
-        
+        self.favoriteProvider.getFavorites { (result) in
+            DispatchQueue.main.async {
+                self.favorites = result
+                self.table.reloadData()
+            }
+        }
     }
 
     private func setupView() {
+        self.navigationItem.title = "Favorites"
         table.register(FavoriteTableViewCell.nib(), forCellReuseIdentifier: FavoriteTableViewCell.identifier)
         table.dataSource = self
     }
