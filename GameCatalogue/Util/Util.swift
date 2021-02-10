@@ -59,6 +59,7 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         dateFormatter.dateStyle = .long
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
         return dateFormatter.string(from: self)
     }
 }

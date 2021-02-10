@@ -20,6 +20,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var id: Int?
+    var result: GameDetail?
+    private lazy var favoriteProvider: FavoriteProvider = { return FavoriteProvider() }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,15 +54,13 @@ class DetailViewController: UIViewController {
                 return
             }
             
-            var result: GameDetail?
-            
             do {
-                result = try JSONDecoder().decode(GameDetail.self, from: data)
+                self.result = try JSONDecoder().decode(GameDetail.self, from: data)
             } catch {
                 print("Error when decode json")
             }
             
-            guard let finalResult = result else {
+            guard let finalResult = self.result else {
                 return
             }
             
@@ -116,4 +116,31 @@ class DetailViewController: UIViewController {
         }
     }
     
+    @IBAction func addToFavorite(_ sender: UIButton) {
+        guard let finalResult = result else {
+            return
+        }
+        
+        favoriteProvider.createFavorite(
+            id!,
+            finalResult.name,
+            finalResult.released!,
+            finalResult.backgroundImage!,
+            finalResult.backgroundImageAdditional!,
+            finalResult.rating,
+            finalResult.description
+        ) {
+            DispatchQueue.main.async {
+                let alert = UIAlertController(
+                    title: "Successful",
+                    message: "Game has been added to favorite.",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
 }
