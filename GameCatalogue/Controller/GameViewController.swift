@@ -100,7 +100,7 @@ extension GameViewController: UITableViewDataSource {
 
 extension GameViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = DetailViewController(nibName: "DetailViewController", bundle: nil)
+        let detail = DetailGameViewController(nibName: "DetailGameViewController", bundle: nil)
         detail.id = games[indexPath.row].id
         self.navigationController?.pushViewController(detail, animated: true)
     }

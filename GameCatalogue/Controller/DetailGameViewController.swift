@@ -1,5 +1,5 @@
 //
-//  DetailViewController.swift
+//  DetailGameViewController.swift
 //  GameCatalogue
 //
 //  Created by Wahid Hidayat on 01/02/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailGameViewController: UIViewController {
 
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var poster: UIImageView!

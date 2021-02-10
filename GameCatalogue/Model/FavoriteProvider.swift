@@ -91,4 +91,29 @@ class FavoriteProvider {
             }
         }
     }
+    
+    func getFavorite(_ id: Int, completion: @escaping(_ favorites: FavoriteModel) -> Void) {
+        let taskContext = newTaskContext()
+        taskContext.perform {
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorite")
+            fetchRequest.fetchLimit = 1
+            fetchRequest.predicate = NSPredicate(format: "id == \(id)")
+            do {
+                if let result = try taskContext.fetch(fetchRequest).first {
+                    let favorite = FavoriteModel(
+                        id: result.value(forKey: "id") as? Int64,
+                        name: result.value(forKey: "name") as? String,
+                        released: result.value(forKey: "released") as? String,
+                        backgroundImage: result.value(forKey: "backgroundImgae") as? String,
+                        backgroundImageAdditional: result.value(forKey: "backgroundImageAdditional") as? String,
+                        rating: result.value(forKey: "rating") as? Double,
+                        overview: result.value(forKey: "overview") as? String
+                    )
+                    completion(favorite)
+                }
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+        }
+    }
 }

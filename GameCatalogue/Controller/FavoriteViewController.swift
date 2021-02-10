@@ -18,10 +18,6 @@ class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         loadFavorites()
     }
     
@@ -38,6 +34,7 @@ class FavoriteViewController: UIViewController {
         self.navigationItem.title = "Favorites"
         table.register(FavoriteTableViewCell.nib(), forCellReuseIdentifier: FavoriteTableViewCell.identifier)
         table.dataSource = self
+        table.delegate = self
     }
 }
 
@@ -57,5 +54,13 @@ extension FavoriteViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
+}
+
+extension FavoriteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let detail = DetailFavoriteViewController(nibName: "DetailFavoriteViewController", bundle: nil)
+        detail.game = favorites[indexPath.row]
+        print("gameName: \(detail.game?.name ?? "no game")")
+        self.navigationController?.pushViewController(detail, animated: true)
+    }
 }
