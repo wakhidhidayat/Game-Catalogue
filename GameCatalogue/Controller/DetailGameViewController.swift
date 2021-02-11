@@ -17,19 +17,31 @@ class DetailGameViewController: UIViewController {
     @IBOutlet weak var genres: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var overview: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var id: Int?
     var result: GameDetail?
+    var isInFavorites: Bool? = false
+    
     private lazy var favoriteProvider: FavoriteProvider = { return FavoriteProvider() }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let isDataExist = isInFavorites else {
+            return
+        }
+        if isDataExist {
+            favoriteButton.setImage(UIImage(systemName: "suit.heart.fill"), for: .normal)
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchGame()
     }
     
-    func fetchGame() {
+    private func fetchGame() {
         activityIndicator.startAnimating()
         guard let gameId = id else {
             return
@@ -87,7 +99,7 @@ class DetailGameViewController: UIViewController {
         }).resume()
     }
     
-    func configure(
+    private func configure(
         name: String,
         poster: String,
         background: String,
@@ -116,9 +128,15 @@ class DetailGameViewController: UIViewController {
         }
     }
     
-    @IBAction func addToFavorite(_ sender: UIButton) {
+    private func createFavorite(_ sender: UIButton) {
         guard let finalResult = result else {
             return
+        }
+        
+        var genres = [String]()
+        
+        for genre in finalResult.genres {
+            genres.append(genre.name)
         }
         
         favoriteProvider.createFavorite(
@@ -128,12 +146,20 @@ class DetailGameViewController: UIViewController {
             finalResult.backgroundImage!,
             finalResult.backgroundImageAdditional!,
             finalResult.rating,
-            finalResult.description
+            finalResult.description,
+            genres.joined(separator: ", ")
         ) {
             DispatchQueue.main.async {
+                self.isInFavorites?.toggle()
+                self.setButtonBackGround(
+                    view: sender,
+                    on: UIImage(systemName: "suit.heart.fill")!,
+                    off: UIImage(systemName: "suit.heart")!,
+                    onOffStatus: self.isInFavorites!
+                )
                 let alert = UIAlertController(
-                    title: "Successful",
-                    message: "Game has been added to favorite.",
+                    title: "Succeeded",
+                    message: "Game has been added to favorites.",
                     preferredStyle: .alert
                 )
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
@@ -143,4 +169,47 @@ class DetailGameViewController: UIViewController {
             }
         }
     }
+    
+    private func deleteFavorite(_ sender: UIButton) {
+        guard let favoriteId = id else {
+            return
+        }
+        favoriteProvider.deleteFavorite(favoriteId) {
+            DispatchQueue.main.async {
+                self.isInFavorites?.toggle()
+                self.setButtonBackGround(
+                    view: sender,
+                    on: UIImage(systemName: "suit.heart.fill")!,
+                    off: UIImage(systemName: "suit.heart")!,
+                    onOffStatus: self.isInFavorites!
+                )
+                let alert = UIAlertController(
+                    title: "Removed Succeeded",
+                    message: "Game has been removed from favorites.",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @IBAction func addToFavorite(_ sender: UIButton) {
+        if isInFavorites! {
+            deleteFavorite(sender)
+        } else {
+            createFavorite(sender)
+        }
+        print(String(isInFavorites!))
+    }
+    
+    private func setButtonBackGround(view: UIButton, on: UIImage, off: UIImage, onOffStatus: Bool ) {
+        switch onOffStatus {
+        case true:
+            view.setImage(on, for: .normal)
+        default:
+            view.setImage(off, for: .normal)
+        }    }
 }

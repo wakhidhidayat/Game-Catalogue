@@ -10,7 +10,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailFavoriteViewController" customModule="GameCatalogue" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="5Ns-Gp-wd2" id="umD-zQ-Fs2"/>
                 <outlet property="background" destination="GaL-kg-bbb" id="b4m-75-dLN"/>
+                <outlet property="favoriteButton" destination="gu1-hk-KCT" id="Ntx-vu-UAh"/>
                 <outlet property="genres" destination="6FG-Rm-Xk5" id="O67-K3-D4d"/>
                 <outlet property="name" destination="I4Z-VE-ppp" id="LKE-cQ-sQW"/>
                 <outlet property="overview" destination="Hqw-7h-iof" id="Kdr-u4-zMC"/>
@@ -118,9 +120,6 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="WxN-03-gz4">
-                                    <rect key="frame" x="197" y="223" width="20" height="20"/>
-                                </activityIndicatorView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqw-7h-iof">
                                     <rect key="frame" x="10" y="439" width="394" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -137,10 +136,16 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gu1-hk-KCT">
                                     <rect key="frame" x="378.5" y="351.5" width="25.5" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <state key="normal" image="suit.heart" catalog="system">
+                                    <state key="normal" image="suit.heart.fill" catalog="system">
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                     </state>
+                                    <connections>
+                                        <action selector="removeFromFavorites:" destination="-1" eventType="touchUpInside" id="8hL-wB-YLq"/>
+                                    </connections>
                                 </button>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="5Ns-Gp-wd2">
+                                    <rect key="frame" x="197" y="223" width="20" height="20"/>
+                                </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -149,15 +154,15 @@
                                 <constraint firstAttribute="bottom" secondItem="Hqw-7h-iof" secondAttribute="bottom" constant="10" id="AGs-Yc-bot"/>
                                 <constraint firstItem="Wzu-pv-yIK" firstAttribute="bottom" secondItem="GaL-kg-bbb" secondAttribute="bottom" constant="36" id="B9B-hz-pAE"/>
                                 <constraint firstItem="I4Z-VE-ppp" firstAttribute="leading" secondItem="lkQ-fi-7XK" secondAttribute="leading" constant="10" id="Bll-D2-crh"/>
-                                <constraint firstItem="WxN-03-gz4" firstAttribute="centerX" secondItem="lkQ-fi-7XK" secondAttribute="centerX" id="EOK-Lg-CF3"/>
                                 <constraint firstAttribute="trailing" secondItem="Hqw-7h-iof" secondAttribute="trailing" constant="10" id="FsW-Ku-bqN"/>
                                 <constraint firstItem="Wzu-pv-yIK" firstAttribute="leading" secondItem="lkQ-fi-7XK" secondAttribute="leading" constant="10" id="Gnd-b9-2d4"/>
                                 <constraint firstAttribute="trailing" secondItem="qCX-bx-117" secondAttribute="trailing" constant="10" id="LA3-Sf-ySe"/>
+                                <constraint firstItem="5Ns-Gp-wd2" firstAttribute="centerX" secondItem="lkQ-fi-7XK" secondAttribute="centerX" id="MgB-9J-PEo"/>
                                 <constraint firstAttribute="trailing" secondItem="gu1-hk-KCT" secondAttribute="trailing" constant="10" id="TnX-OJ-dvX"/>
                                 <constraint firstItem="I4Z-VE-ppp" firstAttribute="top" secondItem="Wzu-pv-yIK" secondAttribute="bottom" constant="16" id="Uz3-1Y-zq0"/>
-                                <constraint firstItem="WxN-03-gz4" firstAttribute="centerY" secondItem="lkQ-fi-7XK" secondAttribute="centerY" id="VgX-P0-GOe"/>
                                 <constraint firstItem="gu1-hk-KCT" firstAttribute="centerY" secondItem="Zan-mv-s5Y" secondAttribute="centerY" id="Yfs-3g-Taf"/>
                                 <constraint firstItem="GaL-kg-bbb" firstAttribute="leading" secondItem="lkQ-fi-7XK" secondAttribute="leading" id="aXd-jz-xgi"/>
+                                <constraint firstItem="5Ns-Gp-wd2" firstAttribute="centerY" secondItem="lkQ-fi-7XK" secondAttribute="centerY" id="cEP-45-2J0"/>
                                 <constraint firstAttribute="trailing" secondItem="GaL-kg-bbb" secondAttribute="trailing" id="d6g-sR-lfH"/>
                                 <constraint firstItem="Zan-mv-s5Y" firstAttribute="leading" secondItem="lkQ-fi-7XK" secondAttribute="leading" constant="10" id="fxd-jT-qFb"/>
                                 <constraint firstItem="Hqw-7h-iof" firstAttribute="top" secondItem="qCX-bx-117" secondAttribute="bottom" constant="10" id="hL6-QI-Z16"/>
@@ -193,7 +198,7 @@
     </objects>
     <resources>
         <image name="star.fill" catalog="system" width="128" height="116"/>
-        <image name="suit.heart" catalog="system" width="128" height="109"/>
+        <image name="suit.heart.fill" catalog="system" width="128" height="109"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

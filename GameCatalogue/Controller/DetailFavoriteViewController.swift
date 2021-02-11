@@ -17,6 +17,8 @@ class DetailFavoriteViewController: UIViewController {
     @IBOutlet weak var genres: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var overview: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var game: FavoriteModel?
     private lazy var favoriteProvider: FavoriteProvider = { return FavoriteProvider() }()
@@ -25,24 +27,28 @@ class DetailFavoriteViewController: UIViewController {
         super.viewWillAppear(animated)
         loadFavorite()
     }
+    
     private func loadFavorite() {
+        activityIndicator.startAnimating()
         guard let gameData = game else {
             return
         }
+        
         DispatchQueue.main.async {
             self.configure(
                 name: gameData.name!,
                 poster: gameData.backgroundImage!,
                 background: gameData.backgroundImageAdditional!,
                 released: gameData.released,
-                genres: "-",
+                genres: gameData.genres!,
                 rating: gameData.rating!,
                 overview: gameData.overview!
             )
+            self.activityIndicator.stopAnimating()
         }
     }
     
-    func configure(
+    private func configure(
         name: String,
         poster: String,
         background: String,
@@ -51,7 +57,7 @@ class DetailFavoriteViewController: UIViewController {
         rating: Double,
         overview: String
     ) {
-        self.genres.text = "-"
+        self.genres.text = genres
         self.name.text = name
         self.rating.text = "\(rating) / 5"
         self.overview.text = Util.removeHTMLTags(in: overview)
@@ -70,5 +76,26 @@ class DetailFavoriteViewController: UIViewController {
             self.released.text = "-"
         }
     }
-
+    
+    @IBAction func removeFromFavorites(_ sender: UIButton) {
+        guard let id = game?.id else {
+            return
+        }
+        let favoriteId = Int(id)
+        
+        favoriteProvider.deleteFavorite(favoriteId) {
+            DispatchQueue.main.async {
+                self.favoriteButton.setImage(UIImage(systemName: "suit.heart"), for: .normal)
+                let alert = UIAlertController(
+                    title: "Removed Succeeded",
+                    message: "Game has been removed from favorites.",
+                    preferredStyle: .alert
+                )
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
 }

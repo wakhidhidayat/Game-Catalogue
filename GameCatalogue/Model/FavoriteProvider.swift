@@ -42,6 +42,7 @@ class FavoriteProvider {
         _ backgroundImageAdditional: String,
         _ rating: Double,
         _ overview: String,
+        _ genres: String,
         completion: @escaping() -> Void
     ) {
         let taskContext = newTaskContext()
@@ -55,6 +56,7 @@ class FavoriteProvider {
                 game.setValue(backgroundImageAdditional, forKey: "backgroundImageAdditional")
                 game.setValue(rating, forKey: "rating")
                 game.setValue(overview, forKey: "overview")
+                game.setValue(genres, forKey: "genres")
                 
                 do {
                     try taskContext.save()
@@ -81,7 +83,8 @@ class FavoriteProvider {
                         backgroundImage: result.value(forKeyPath: "backgroundImage") as? String,
                         backgroundImageAdditional: result.value(forKeyPath: "backgroundImageAdditional") as? String,
                         rating: result.value(forKeyPath: "rating") as? Double,
-                        overview: result.value(forKeyPath: "overview") as? String
+                        overview: result.value(forKeyPath: "overview") as? String,
+                        genres: result.value(forKey: "genres") as? String
                     )
                     favorites.append(favorite)
                 }
@@ -92,28 +95,36 @@ class FavoriteProvider {
         }
     }
     
-    func getFavorite(_ id: Int, completion: @escaping(_ favorites: FavoriteModel) -> Void) {
+    func checkDataExistence(_ id: Int) -> Bool {
+        var isExist = false
+        let taskContext = newTaskContext()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Favorite")
+        fetchRequest.predicate = NSPredicate(format: "id == \(id)")
+        do {
+            let result = try taskContext.fetch(fetchRequest)
+            if result.count > 0 {
+                isExist = true
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return isExist
+    }
+    
+    func deleteFavorite(_ id: Int, completion: @escaping() -> Void) {
         let taskContext = newTaskContext()
         taskContext.perform {
-            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorite")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Favorite")
             fetchRequest.fetchLimit = 1
             fetchRequest.predicate = NSPredicate(format: "id == \(id)")
-            do {
-                if let result = try taskContext.fetch(fetchRequest).first {
-                    let favorite = FavoriteModel(
-                        id: result.value(forKey: "id") as? Int64,
-                        name: result.value(forKey: "name") as? String,
-                        released: result.value(forKey: "released") as? String,
-                        backgroundImage: result.value(forKey: "backgroundImgae") as? String,
-                        backgroundImageAdditional: result.value(forKey: "backgroundImageAdditional") as? String,
-                        rating: result.value(forKey: "rating") as? Double,
-                        overview: result.value(forKey: "overview") as? String
-                    )
-                    completion(favorite)
-                }
-            } catch let error as NSError {
-                print("Could not fetch. \(error), \(error.userInfo)")
+            let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            batchDeleteRequest.resultType = .resultTypeCount
+            if let batchDeleteResult =
+                try? taskContext.execute(batchDeleteRequest) as? NSBatchDeleteResult,
+                batchDeleteResult.result != nil {
+                completion()
             }
         }
     }
+
 }

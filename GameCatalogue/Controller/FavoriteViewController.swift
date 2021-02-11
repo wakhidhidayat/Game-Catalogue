@@ -13,18 +13,33 @@ class FavoriteViewController: UIViewController {
     @IBOutlet var table: UITableView!
     
     var favorites = [FavoriteModel]()
+    var activityIndicator: UIActivityIndicatorView!
     private lazy var favoriteProvider: FavoriteProvider = { return FavoriteProvider() }()
     
+    override func loadView() {
+        super.loadView()
+        
+        activityIndicator = UIActivityIndicatorView(style: .medium)
+        table.backgroundView = activityIndicator
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadFavorites()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        loadFavorites()
     }
     
     private func loadFavorites() {
+        activityIndicator.startAnimating()
+        table.separatorStyle = .none
         self.favoriteProvider.getFavorites { (result) in
             DispatchQueue.main.async {
                 self.favorites = result
+                self.table.separatorStyle = .singleLine
                 self.table.reloadData()
             }
         }
@@ -57,10 +72,9 @@ extension FavoriteViewController: UITableViewDataSource {
 }
 
 extension FavoriteViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = DetailFavoriteViewController(nibName: "DetailFavoriteViewController", bundle: nil)
         detail.game = favorites[indexPath.row]
-        print("gameName: \(detail.game?.name ?? "no game")")
         self.navigationController?.pushViewController(detail, animated: true)
     }
 }

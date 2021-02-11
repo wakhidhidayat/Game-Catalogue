@@ -16,4 +16,5 @@ struct FavoriteModel {
     let backgroundImageAdditional: String?
     let rating: Double?
     let overview: String?
+    let genres: String?
 }

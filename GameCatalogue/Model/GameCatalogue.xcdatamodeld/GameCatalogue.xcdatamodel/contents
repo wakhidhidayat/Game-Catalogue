@@ -3,6 +3,7 @@
     <entity name="Favorite" representedClassName="Favorite" syncable="YES" codeGenerationType="class">
         <attribute name="backgroundImage" optional="YES" attributeType="String"/>
         <attribute name="backgroundImageAdditional" optional="YES" attributeType="String"/>
+        <attribute name="genres" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="overview" optional="YES" attributeType="String"/>
@@ -10,6 +11,6 @@
         <attribute name="released" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Favorite" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="Favorite" positionX="-63" positionY="-18" width="128" height="163"/>
     </elements>
 </model>

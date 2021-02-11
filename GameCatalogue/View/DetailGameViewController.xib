@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="activityIndicator" destination="GQe-uh-WsG" id="pY0-vV-1yM"/>
                 <outlet property="background" destination="dgq-uk-BkZ" id="C5w-WJ-k8W"/>
+                <outlet property="favoriteButton" destination="1Gk-yR-cIS" id="TZE-3I-0P3"/>
                 <outlet property="genres" destination="XQu-W6-thL" id="onG-yi-S1Q"/>
                 <outlet property="name" destination="bIB-u5-JvN" id="iEg-xf-j98"/>
                 <outlet property="overview" destination="MB5-Ar-VNd" id="Bmd-k1-XN4"/>

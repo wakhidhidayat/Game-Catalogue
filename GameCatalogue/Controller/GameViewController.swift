@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     
     var games = [Game]()
     var activityIndicator: UIActivityIndicatorView!
+    private lazy var favoriteProvider: FavoriteProvider = { return FavoriteProvider() }()
     
     override func loadView() {
         super.loadView()
@@ -27,13 +28,12 @@ class GameViewController: UIViewController {
 
         self.navigationItem.title = "Popular Games"
         fetchGames()
-        
         table.register(GameTableViewCell.nib(), forCellReuseIdentifier: GameTableViewCell.identifier)
         table.dataSource = self
         table.delegate = self
     }
     
-    func fetchGames() {
+    private func fetchGames() {
         activityIndicator.startAnimating()
         table.separatorStyle = .none
         
@@ -102,6 +102,7 @@ extension GameViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = DetailGameViewController(nibName: "DetailGameViewController", bundle: nil)
         detail.id = games[indexPath.row].id
+        detail.isInFavorites = favoriteProvider.checkDataExistence(detail.id!)
         self.navigationController?.pushViewController(detail, animated: true)
     }
 }
