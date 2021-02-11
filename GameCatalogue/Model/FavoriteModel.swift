@@ -12,8 +12,8 @@ struct FavoriteModel {
     let id: Int64?
     let name: String?
     let released: String?
-    let backgroundImage: String?
-    let backgroundImageAdditional: String?
+    let backgroundImage: Data?
+    let backgroundImageAdditional: Data?
     let rating: Double?
     let overview: String?
     let genres: String?

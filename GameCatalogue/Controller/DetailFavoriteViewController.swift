@@ -50,8 +50,8 @@ class DetailFavoriteViewController: UIViewController {
     
     private func configure(
         name: String,
-        poster: String,
-        background: String,
+        poster: Data,
+        background: Data,
         released: String?,
         genres: String,
         rating: Double,
@@ -60,21 +60,10 @@ class DetailFavoriteViewController: UIViewController {
         self.genres.text = genres
         self.name.text = name
         self.rating.text = "\(rating) / 5"
-        self.overview.text = Util.removeHTMLTags(in: overview)
-        
-        if let posterData =  try? Data(contentsOf: URL(string: poster)!) {
-            self.poster.image = UIImage(data: posterData)
-        }
-        
-        if let backgroundData =  try? Data(contentsOf: URL(string: background)!) {
-            self.background.image = UIImage(data: backgroundData)
-        }
-        
-        if let releasedData = released {
-            self.released.text = Util.formatDate(from: releasedData)
-        } else {
-            self.released.text = "-"
-        }
+        self.overview.text = overview
+        self.poster.image = UIImage(data: poster)
+        self.background.image = UIImage(data: background)
+        self.released.text = released
     }
     
     @IBAction func removeFromFavorites(_ sender: UIButton) {

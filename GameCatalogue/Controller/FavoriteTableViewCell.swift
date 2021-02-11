@@ -37,10 +37,7 @@ class FavoriteTableViewCell: UITableViewCell {
         self.poster.clipsToBounds = true
         self.name.text = model.name
         self.rating.text = "\(model.rating!) / 5"
-        self.released.text = Util.formatDate(from: model.released!)
-        
-        if let data = try? Data(contentsOf: URL(string: model.backgroundImage!)!) {
-            self.poster.image = UIImage(data: data)
-        }
+        self.released.text = model.released
+        self.poster.image = UIImage(data: model.backgroundImage!)
     }
 }

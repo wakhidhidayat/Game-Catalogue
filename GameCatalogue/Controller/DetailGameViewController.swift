@@ -134,19 +134,29 @@ class DetailGameViewController: UIViewController {
         }
         
         var genres = [String]()
-        
         for genre in finalResult.genres {
             genres.append(genre.name)
+        }
+        
+        guard let backgroundData = try? Data(contentsOf: URL(string: finalResult.backgroundImage!)!) else {
+            return
+        }
+        guard let backgroundAdditionalData = try? Data(
+                contentsOf: URL(
+                    string: finalResult.backgroundImageAdditional!
+                )!
+        ) else {
+            return
         }
         
         favoriteProvider.createFavorite(
             id!,
             finalResult.name,
-            finalResult.released!,
-            finalResult.backgroundImage!,
-            finalResult.backgroundImageAdditional!,
+            Util.formatDate(from: finalResult.released!)!,
+            backgroundData,
+            backgroundAdditionalData,
             finalResult.rating,
-            finalResult.description,
+            Util.removeHTMLTags(in: finalResult.description)!,
             genres.joined(separator: ", ")
         ) {
             DispatchQueue.main.async {

@@ -41,6 +41,7 @@ class FavoriteViewController: UIViewController {
                 self.favorites = result
                 self.table.separatorStyle = .singleLine
                 self.table.reloadData()
+                self.activityIndicator.stopAnimating()
             }
         }
     }
